@@ -1,6 +1,9 @@
 let dom = {
-    "main": null
+    "load-file": null,
+    main: null
 };
+
+let input_queue;
 
 function updateSize() {
     const html = document.body.parentNode;
@@ -9,9 +12,16 @@ function updateSize() {
     html.style = "--size: "+Math.min(width, height)+"px";
 }
 
+function pressKey(evt) {
+    input_queue.push(evt.key);
+}
+
 window.onload = () => {
-    Array.from(Object.keys(dom)).forEach(id => dom[id] = document.getElementById(id));
+    Object.keys(dom).forEach(id => dom[id] = document.getElementById(id));
 
     updateSize();
     window.addEventListener("resize", updateSize);
+    dom.main.addEventListener("keydown", pressKey);
+
+    loadPresentation();
 };
